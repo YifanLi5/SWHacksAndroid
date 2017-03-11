@@ -1,14 +1,76 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/background_gradient"
     tools:context="com.yifan.swhacksandroid.Fragments.FishStatusFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="Fish Fragment" />
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_centerVertical="true"
+        android:layout_alignParentStart="true"
+        android:id="@+id/temperature_linear_layout"
+        >
 
-</FrameLayout>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/white"
+            android:text="212 °C"
+            android:id="@+id/celsius_tv"
+            android:textSize="@dimen/large_text_size"
+            android:gravity="center"
+            />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/white"
+            android:text="451 °F"
+            android:id="@+id/fahrenheit_tv"
+            android:textSize="@dimen/large_text_size"
+            android:gravity="center"
+            />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="150dp"
+            />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:orientation="horizontal"
+
+        >
+
+        <TextView
+            android:gravity="center"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:textColor="@color/white"
+            android:text="@string/last_update"
+            android:textSize="@dimen/small_text_size"
+            android:layout_weight="0.5"/>
+
+        <TextView
+            android:layout_width="0dp"
+            android:gravity="center"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.5"
+            android:text="@string/placeholder_time"
+            android:id="@+id/time_tv"
+            android:textColor="@color/white"
+            android:textSize="@dimen/small_text_size"/>
+
+
+
+    </LinearLayout>
+
+
+</RelativeLayout>
