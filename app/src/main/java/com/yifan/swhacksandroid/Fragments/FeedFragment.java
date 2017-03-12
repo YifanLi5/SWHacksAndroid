@@ -48,7 +48,7 @@ public class FeedFragment extends Fragment {
         mFlipper = (ViewFlipper) mRootView.findViewById(R.id.flipper);
         mMagikarpGifImageView = (GifImageView) mRootView.findViewById(R.id.magikarp_gtf);
         mGyaradosGifImageButton = (GifImageButton) mRootView.findViewById(R.id.gyarados_evo_gif);
-        mPokeballImageView = (ImageView) mRootView.findViewById(R.id.pokeball_iv);
+        mPokeballImageView = (ImageView) mRootView.findViewById(R.id.food_iv);
         mPokeballImageView.bringToFront();
         mPokeballImageView.setOnTouchListener(new OnTouchListener());
 
