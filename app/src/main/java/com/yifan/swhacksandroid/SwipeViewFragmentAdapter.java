@@ -7,7 +7,7 @@ import android.util.SparseArray;
 import android.view.ViewGroup;
 
 import com.yifan.swhacksandroid.Fragments.FeedFragment;
-import com.yifan.swhacksandroid.Fragments.FishStatusFragment;
+import com.yifan.swhacksandroid.Fragments.TemperatureFragment;
 
 /**
  * Created by Yifan on 3/10/2017.
@@ -31,7 +31,7 @@ public class SwipeViewFragmentAdapter extends FragmentPagerAdapter {
             case SwipeViewFragmentHolderActivity.FEED_FRAGMENT_POSITION:
                 return FeedFragment.getInstance();
             case SwipeViewFragmentHolderActivity.FISH_STATUS_FRAGMENT_POSITION:
-                return FishStatusFragment.getInstance(tempC, time);
+                return TemperatureFragment.getInstance(tempC, time);
             default:
                 throw  new UnsupportedOperationException("invalid position");
 

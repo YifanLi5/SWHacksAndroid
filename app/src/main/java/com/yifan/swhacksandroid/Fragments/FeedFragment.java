@@ -4,11 +4,13 @@ package com.yifan.swhacksandroid.Fragments;
 import android.app.Fragment;
 import android.os.Bundle;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.ViewFlipper;
 
@@ -21,11 +23,14 @@ import pl.droidsonroids.gif.GifImageView;
 
 public class FeedFragment extends Fragment {
     private View mRootView;
+    private static final String LOG_TAG = FeedFragment.class.getSimpleName();
+
     private float mPokeballOriginalX = -1, mPokeballOriginalY = -1;
     private int mWindowWidth, mWindowHeight;
 
     private ViewFlipper mFlipper;
     //page magikarp
+    private TextView mLastFedTV;
     private ImageView mPokeballImageView;
     private GifImageView mMagikarpGifImageView;
 
@@ -50,6 +55,7 @@ public class FeedFragment extends Fragment {
         mMagikarpGifImageView = (GifImageView) mRootView.findViewById(R.id.magikarp_gtf);
         mGyaradosGifImageButton = (GifImageButton) mRootView.findViewById(R.id.gyarados_evo_gif);
         mPokeballImageView = (ImageView) mRootView.findViewById(R.id.food_iv);
+        mLastFedTV = (TextView) mRootView.findViewById(R.id.last_feed_time);
         mPokeballImageView.bringToFront();
         mPokeballImageView.setOnTouchListener(new OnTouchListener());
 
@@ -74,8 +80,14 @@ public class FeedFragment extends Fragment {
         mPokeballImageView.setX(mPokeballOriginalX);
         mPokeballImageView.setY(mPokeballOriginalY);
         mFlipper.setDisplayedChild(1);
-        Toast.makeText(getActivity(), "Fish has been fed!", Toast.LENGTH_SHORT).show();
+        Log.i(LOG_TAG, "attempt to feed");
+
     }
+
+    public void setLastFedTV(String s){
+        mLastFedTV.setText(s);
+    }
+
 
     float xOffset, yOffset;
 
