@@ -36,7 +36,7 @@ public class FeedFragment extends Fragment {
         // Required empty public constructor
     }
 
-    public static FeedFragment getInstance(){
+    public static FeedFragment getInstance() {
         return new FeedFragment();
     }
 
@@ -97,7 +97,7 @@ public class FeedFragment extends Fragment {
                     yOffset = view.getY() - event.getRawY();
                     break;
                 case MotionEvent.ACTION_MOVE:
-                    view.animate().x(event.getRawX() + xOffset).y(event.getRawY() + yOffset).setDuration(0).start();
+                    view.animate().x(Math.max(0, event.getRawX() + xOffset)).y(Math.max(0, event.getRawY() + yOffset)).setDuration(0).start();
                     break;
                 case MotionEvent.ACTION_UP:
                     if (pokeballMagikarpDist() < DISTANCE_THRESHOLD) {
