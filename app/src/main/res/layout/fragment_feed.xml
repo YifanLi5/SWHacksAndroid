@@ -1,27 +1,24 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="#000000"
-    android:id="@+id/parent_layout"
-    tools:context="com.yifan.swhacksandroid.Fragments.FeedFragment">
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/parent_layout"
+        tools:context="com.yifan.swhacksandroid.Fragments.FeedFragment">
 
-    <ImageView
-        android:layout_width="150dp"
-        android:layout_height="150dp"
-        android:src="@mipmap/pokeball"
-        android:background="@color/transparent"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:id="@+id/pokeball_iv"/>
+        <ViewFlipper
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/flipper"
+            >
 
-    <pl.droidsonroids.gif.GifTextView
-        android:layout_width="200dp"
-        android:layout_height="200dp"
-        android:background="@mipmap/magikarp"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:id="@+id/magikarp_gtf"/>
+            <include layout="@layout/feed_magikarp_view"
+                android:id="@+id/magikarp"/>
+
+            <include layout="@layout/gyrados_view"
+                android:id="@+id/gyarados_evo"/>
 
 
-</RelativeLayout>
+        </ViewFlipper>
+
+
+</FrameLayout>

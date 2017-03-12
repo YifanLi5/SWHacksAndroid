@@ -2,33 +2,35 @@ package com.yifan.swhacksandroid.Fragments;
 
 
 import android.app.Fragment;
-import android.graphics.Point;
 import android.os.Bundle;
 
-import android.view.Display;
-import android.view.DragEvent;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
-import android.widget.RelativeLayout.LayoutParams;
 import android.widget.Toast;
+import android.widget.ViewFlipper;
 
 import com.yifan.swhacksandroid.R;
 
-import pl.droidsonroids.gif.GifTextView;
+import pl.droidsonroids.gif.GifImageButton;
+import pl.droidsonroids.gif.GifImageView;
 
 
 public class FeedFragment extends Fragment {
-
-    private ImageView mPokeballImageView;
-    private GifTextView mMagikarpGifTextView;
-    private float mPokeballOriginalX = -1, mPokeballOriginalY = -1;
     private View mRootView;
+    private float mPokeballOriginalX = -1, mPokeballOriginalY = -1;
     private int mWindowWidth, mWindowHeight;
+
+    private ViewFlipper mFlipper;
+    //page magikarp
+    private ImageView mPokeballImageView;
+    private GifImageView mMagikarpGifImageView;
+
+    //page evolution
+    private GifImageButton mGyaradosGifImageButton;
+
 
     public FeedFragment() {
         // Required empty public constructor
@@ -43,13 +45,25 @@ public class FeedFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         mRootView = inflater.inflate(R.layout.fragment_feed, container, false);
-        mMagikarpGifTextView = (GifTextView) mRootView.findViewById(R.id.magikarp_gtf);
+        mFlipper = (ViewFlipper) mRootView.findViewById(R.id.flipper);
+        mMagikarpGifImageView = (GifImageView) mRootView.findViewById(R.id.magikarp_gtf);
+        mGyaradosGifImageButton = (GifImageButton) mRootView.findViewById(R.id.gyarados_evo_gif);
         mPokeballImageView = (ImageView) mRootView.findViewById(R.id.pokeball_iv);
         mPokeballImageView.bringToFront();
         mPokeballImageView.setOnTouchListener(new OnTouchListener());
 
         mPokeballOriginalX = mPokeballImageView.getLeft();
         mPokeballOriginalY = mPokeballImageView.getTop();
+        mFlipper.setDisplayedChild(0);
+
+        mGyaradosGifImageButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mPokeballImageView.setX(mPokeballOriginalX);
+                mPokeballImageView.setY(mPokeballOriginalY);
+                mFlipper.setDisplayedChild(0); //on click go back to first page
+            }
+        });
 
         return mRootView;
     }
@@ -58,7 +72,7 @@ public class FeedFragment extends Fragment {
         // Restore to original position
         mPokeballImageView.setX(mPokeballOriginalX);
         mPokeballImageView.setY(mPokeballOriginalY);
-
+        mFlipper.setDisplayedChild(1);
         Toast.makeText(getActivity(), "Fish has been fed!", Toast.LENGTH_SHORT).show();
     }
 
@@ -95,8 +109,8 @@ public class FeedFragment extends Fragment {
         }
 
         private double pokeballMagikarpDist() {
-            float magikarpCenterX = mMagikarpGifTextView.getX() + mMagikarpGifTextView.getWidth()/2;
-            float magikarpCenterY = mMagikarpGifTextView.getY() + mMagikarpGifTextView.getHeight()/2;
+            float magikarpCenterX = mMagikarpGifImageView.getX() + mMagikarpGifImageView.getWidth()/2;
+            float magikarpCenterY = mMagikarpGifImageView.getY() + mMagikarpGifImageView.getHeight()/2;
             float pokeballCenterX = mPokeballImageView.getX() + mPokeballImageView.getWidth()/2;
             float pokeballCenterY = mPokeballImageView.getY() + mPokeballImageView.getHeight()/2;
 
@@ -105,4 +119,6 @@ public class FeedFragment extends Fragment {
                     Math.pow(magikarpCenterY - pokeballCenterY, 2), 0.5);
         }
     }
+
+
 }
