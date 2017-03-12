@@ -5,6 +5,8 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
 
+import android.content.Intent;
+
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
@@ -21,6 +23,9 @@ public class MainActivity extends Activity {
         setContentView(R.layout.activity_main);
         newValueField = (EditText) findViewById(R.id.new_value_field);
         mDatabase = FirebaseDatabase.getInstance().getReference();
+
+        Intent myIntent = new Intent(this, SwipeViewFragmentHolderActivity.class);
+        startActivity(myIntent);
     }
 
     public void onSendPressed(View view) {
@@ -33,6 +38,4 @@ public class MainActivity extends Activity {
         ToRaspberry data = new ToRaspberry(status, last_feed);
         mDatabase.child("ToRaspberry").setValue(data);
     }
-
-
 }

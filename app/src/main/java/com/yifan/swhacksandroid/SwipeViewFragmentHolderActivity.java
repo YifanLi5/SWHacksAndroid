@@ -45,12 +45,10 @@ public class SwipeViewFragmentHolderActivity extends Activity {
                     String time = (String) dataSnapshot.child("Time").getValue();
                     Log.i(LOG_TAG, "temp: " + temperature + "\ntime: " + time);
                     FishStatusFragment f = (FishStatusFragment) adapter.getRegistedFragment(FISH_STATUS_FRAGMENT_POSITION);
-                    f.updateTemperatureAndTime(temperature.doubleValue(), time);
+                    // f.updateTemperatureAndTime(temperature.doubleValue(), time);
                 } else {
                     throw new UnsupportedOperationException("wrong fragment returned");
                 }
-
-
             }
 
             @Override
