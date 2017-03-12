@@ -81,7 +81,9 @@ public class FeedFragment extends Fragment {
         mPokeballImageView.setY(mPokeballOriginalY);
         mFlipper.setDisplayedChild(1);
         Log.i(LOG_TAG, "attempt to feed");
-
+        if(getActivity() instanceof SwipeViewFragmentHolderActivity){
+            ((SwipeViewFragmentHolderActivity) getActivity()).feedFish();
+        }
     }
 
     public void setLastFedTV(String s){

@@ -5,15 +5,13 @@ package com.yifan.swhacksandroid;
  */
 
 public class ToRaspberry {
-    public String status;
-    public String last_feed;
+    public boolean feed;
 
     public ToRaspberry(){
 
     }
 
-    public ToRaspberry(String status, String last_feed){
-        this.status = status;
-        this.last_feed = last_feed;
+    public ToRaspberry(boolean feed){
+        this.feed = feed;
     }
 }

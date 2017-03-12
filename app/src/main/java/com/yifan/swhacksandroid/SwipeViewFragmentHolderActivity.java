@@ -26,7 +26,11 @@ public class SwipeViewFragmentHolderActivity extends Activity {
     private DatabaseReference statusDbRef;
 
     private static final String HTTPS_SWHACKSFIREBASE_FIREBASEIO_COM_TEMPERATURE = "https://swhacksfirebase.firebaseio.com/Temperature";
-    private static final String HTTPS_SWHACKSFIREBASE_FIREBASEIO_COM_FEED_STATUS = "https://swhacksfirebase.firebaseio.com/FeedStatus";
+    private static final String HTTPS_SWHACKSFIREBASE_FIREBASEIO_COM_FEED_STATUS = "https://swhacksfirebase.firebaseio.com/FeedStatus/feed";
+
+    public void feedFish(){
+        statusDbRef.setValue(true);
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,11 +47,11 @@ public class SwipeViewFragmentHolderActivity extends Activity {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 if (adapter.getItem(FISH_STATUS_FRAGMENT_POSITION) instanceof TemperatureFragment) {
-                    Long temperature = (Long) dataSnapshot.child("value").getValue();
+                    Double temperature = (Double) dataSnapshot.child("value").getValue();
                     String time = (String) dataSnapshot.child("time").getValue();
                     Log.i(LOG_TAG, "temp: " + temperature + "\ntime: " + time);
                     TemperatureFragment f = (TemperatureFragment) adapter.getRegistedFragment(FISH_STATUS_FRAGMENT_POSITION);
-                    f.updateTemperatureAndTime(temperature.doubleValue(), time);
+                    f.updateTemperatureAndTime(temperature, time);
                 } else {
                     throw new UnsupportedOperationException("wrong fragment returned");
                 }
@@ -59,7 +63,7 @@ public class SwipeViewFragmentHolderActivity extends Activity {
                 Log.w(LOG_TAG, "Failed to read value.", databaseError.toException());
             }
         });
-        statusDbRef = fbdb.getReferenceFromUrl(HTTPS_SWHACKSFIREBASE_FIREBASEIO_COM_FEED_STATUS);
+
         statusDbRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
