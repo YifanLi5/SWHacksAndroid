@@ -1,6 +1,9 @@
 package com.yifan.swhacksandroid;
 
 import android.app.Activity;
+import android.content.Context;
+import android.hardware.Sensor;
+import android.hardware.SensorManager;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.Toast;
@@ -27,6 +30,10 @@ public class SwipeViewFragmentHolderActivity extends Activity {
 
     private static final String HTTPS_SWHACKSFIREBASE_FIREBASEIO_COM_TEMPERATURE = "https://swhacksfirebase.firebaseio.com/Temperature";
     private static final String HTTPS_SWHACKSFIREBASE_FIREBASEIO_COM_FEED_STATUS = "https://swhacksfirebase.firebaseio.com/FeedStatus/feed";
+
+    private SensorManager mSensorManager;
+    private Sensor mAccelerometer;
+    private ShakeDetector mShakeDetector;
 
     public void feedFish(){
         statusDbRef.setValue(true);
@@ -69,10 +76,10 @@ public class SwipeViewFragmentHolderActivity extends Activity {
             public void onDataChange(DataSnapshot dataSnapshot) {
                 if (adapter.getItem(FEED_FRAGMENT_POSITION) instanceof FeedFragment) {
                     try{
-                        Boolean feed = (Boolean) dataSnapshot.child("feed").getValue();
-                        if(!feed && initialPoll){ //if I flipped to true ignore, if flip to false then feed has been acknowledged
+                        Boolean feed = (Boolean) dataSnapshot.getValue();
+                        if(feed && initialPoll){ //if I flipped to true ignore, if flip to false then feed has been acknowledged
                             //have fed fish
-                            String lastFeedTime = (String) dataSnapshot.child("last_feed_time").getValue();
+                            String lastFeedTime = (String) dataSnapshot.getValue();
                             FeedFragment f = (FeedFragment) adapter.getRegistedFragment(FEED_FRAGMENT_POSITION);
                             f.setLastFedTV(lastFeedTime);
                             Toast.makeText(getApplicationContext(), "Fish Fed", Toast.LENGTH_SHORT).show();
@@ -98,6 +105,41 @@ public class SwipeViewFragmentHolderActivity extends Activity {
                 Log.w(LOG_TAG, "Failed to read value.", databaseError.toException());
             }
         });
+
+        mSensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
+        mAccelerometer = mSensorManager
+                .getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
+        mShakeDetector = new ShakeDetector();
+        mShakeDetector.setOnShakeListener(new ShakeDetector.OnShakeListener() {
+
+            @Override
+            public void onShake(int count) {
+				/*
+				 * The following method, "handleShakeEvent(count):" is a stub //
+				 * method you would use to setup whatever you want done once the
+				 * device has been shook.
+				 */
+                handleShakeEvent(count);
+            }
+        });
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        // Add the following line to register the Session Manager Listener onResume
+        mSensorManager.registerListener(mShakeDetector, mAccelerometer,	SensorManager.SENSOR_DELAY_UI);
+    }
+
+    @Override
+    public void onPause() {
+        // Add the following line to unregister the Sensor Manager onPause
+        mSensorManager.unregisterListener(mShakeDetector);
+        super.onPause();
+    }
+
+    private void handleShakeEvent(int count){
+        feedFish();
     }
 
     public void setSwipe(boolean b){
