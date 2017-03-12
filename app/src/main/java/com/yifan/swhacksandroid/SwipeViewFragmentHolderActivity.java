@@ -20,7 +20,7 @@ public class SwipeViewFragmentHolderActivity extends Activity {
     public static final int FEED_FRAGMENT_POSITION = 0;
     public static final int FISH_STATUS_FRAGMENT_POSITION = 1;
     private SwipeViewFragmentAdapter adapter;
-    private ViewPager pager;
+    private DisableSwipeViewPager pager;
     private FirebaseDatabase fbdb;
     private DatabaseReference dbRef;
 
@@ -31,7 +31,7 @@ public class SwipeViewFragmentHolderActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_swipe_view_fragment_holder);
         adapter = new SwipeViewFragmentAdapter(getFragmentManager(), 0, "NULL");
-        pager = (ViewPager) findViewById(R.id.pager);
+        pager = (DisableSwipeViewPager) findViewById(R.id.pager);
         pager.setAdapter(adapter);
 
         fbdb = FirebaseDatabase.getInstance();
@@ -57,6 +57,10 @@ public class SwipeViewFragmentHolderActivity extends Activity {
                 Log.w(LOG_TAG, "Failed to read value.", databaseError.toException());
             }
         });
+    }
+
+    public void setSwipe(boolean b){
+        pager.setPagingEnabled(b);
     }
 }
 

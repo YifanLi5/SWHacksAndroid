@@ -13,6 +13,7 @@ import android.widget.Toast;
 import android.widget.ViewFlipper;
 
 import com.yifan.swhacksandroid.R;
+import com.yifan.swhacksandroid.SwipeViewFragmentHolderActivity;
 
 import pl.droidsonroids.gif.GifImageButton;
 import pl.droidsonroids.gif.GifImageView;
@@ -86,6 +87,10 @@ public class FeedFragment extends Fragment {
         public boolean onTouch(View view, MotionEvent event) {
             switch (event.getActionMasked()) {
                 case MotionEvent.ACTION_DOWN:
+
+                    if(getActivity() instanceof SwipeViewFragmentHolderActivity){
+                        ((SwipeViewFragmentHolderActivity) getActivity()).setSwipe(false);
+                    }
                     // Set original pokeball position if not set
                     // (jank solution, idk how else to do it)
                     if (mPokeballOriginalX <= 0 && mPokeballOriginalY <= 0) {
@@ -100,6 +105,9 @@ public class FeedFragment extends Fragment {
                     view.animate().x(Math.max(0, event.getRawX() + xOffset)).y(Math.max(0, event.getRawY() + yOffset)).setDuration(0).start();
                     break;
                 case MotionEvent.ACTION_UP:
+                    if(getActivity() instanceof SwipeViewFragmentHolderActivity){
+                        ((SwipeViewFragmentHolderActivity) getActivity()).setSwipe(true);
+                    }
                     if (pokeballMagikarpDist() < DISTANCE_THRESHOLD) {
                         triggerFishFeed();
                     }
